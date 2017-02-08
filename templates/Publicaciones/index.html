@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block 'title'%}Publicaciones{%endblock%}
+{%block 'main'%}
+    {%for publicacion in publicaciones%}
+        {%for key,item in publicacion.items%}
+            {{key}} : {{item}} <br>
+        {%endfor%}
+        <hr>
+    {%endfor%}
+{%endblock %}
