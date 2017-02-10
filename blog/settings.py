@@ -28,9 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Separar las apps de default en Django por las creadas por nosotros
 
-INSTALLED_APPS = [
+# Default de Django
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+# Apps creadas por el equipo
+APPLICATION_APPS = [
+    'modules.Publicaciones',
+    'modules.Home'
+]
+
+# Apps creadas por alguien ajeno al equipo
+THIRD_APPLICATION = [
+
+]
+
+# Application definition
+
+INSTALLED_APPS = DJANGO_APPS + APPLICATION_APPS + THIRD_APPLICATION
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,17 +85,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'blog.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 
 # Password validation
@@ -124,3 +129,9 @@ STATICFILES_DIRS = [os.path.join(os.getcwd(),'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.getcwd(),'media')
+
+try:
+    from .local_settings import *
+
+except:
+    pass
