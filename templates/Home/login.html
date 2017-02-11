@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block 'title'%}Iniciar sesión{%endblock%}
+{%block 'main'%}
+<div class="row">
+    <form class="col s12" action="{% url 'Home:login' %}" method="POST">
+        {%csrf_token%}
+        <div class="row">
+            <div class="input-field col s12">
+                <input name="username" type="text" id="username" class="validate">
+                <label for="username">Nombre de usuario</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input name="password" id="password" type="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+        </div>
+        <input type="submit" name="" value="Enviar">
+    </form>
+</div>
+{%endblock %}

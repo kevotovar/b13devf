@@ -1,12 +1,12 @@
 from django.conf.urls import url
-from .views import Index,Contacto,Otros,Suma,Nombre,Comparacion
+from .views import Index,Contacto,Otros,Signup,Login,Logout
 
 urlpatterns = [
     url(r'^$', Index, name='index'),
     url(r'^contacto$', Contacto, name='contacto'),
-    url(r'^nombre/(?P<nombre>[a-zA-Z]+)/$', Nombre, name='nombre'),
     url(r'^otros/(?P<num>[0-9]+)/$', Otros, name='otros'),
-    url(r'^suma/(?P<num1>[0-9]+)/(?P<num2>[0-9]+)/$', Suma, name='suma'),
-    url(r'^comparacion/(?P<num1>[0-9]+)/(?P<num2>[0-9]+)/$', Comparacion, name='comparacion')
+    url(r'signup$', Signup, name='signup'),
+    url(r'login$', Login, name='login'),
+    url(r'logout$', Logout, name='logout')
     #url(r'^$', admin.site.urls),
 ]

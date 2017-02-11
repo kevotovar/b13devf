@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+from .forms import LoginForm
 
 # Create your views here.
 
 def Index(request):
-    return render(request,'Home/index.html')
+    user = request.user
+    return render(request,'Home/index.html',{'user':user})
 
 def Contacto(request):
     return HttpResponse('Contactame pls')
@@ -12,21 +16,49 @@ def Contacto(request):
 def Otros(request,num):
     return HttpResponse('Pagina de otros numero ' + num)
 
-def Suma(request,num1,num2):
-    num1 = int(num1)
-    num2 = int(num2)
-    suma = str(num1 + num2)
-    return HttpResponse('La suma de ' + str(num1) + ' más ' + str(num2) + ' es igual a ' + suma)
-
-def Comparacion(request,num1,num2):
-    num1 = int(num1)
-    num2 = int(num2)
-    if num1 > num2:
-        return HttpResponse('El mayor es ' + str(num1))
-    elif num1 < num2:
-        return HttpResponse('El mayor es ' + str(num2))
+def Login(request):
+    #Se envian los datos del usuario y se validan
+    if request.method == 'POST':
+        user = authenticate(username=request.POST['username'],password = request.POST['password'])
+        if user is not None:
+            login(request,user)
+            return redirect('Home:index')
+        else:
+            return HttpResponse('Error en usuario o contraseña')
     else:
-        return HttpResponse('Son iguales')
+        return render(request,'Home/login.html')
 
-def Nombre(request,nombre):
-    return HttpResponse('Hola ' + nombre)
+def Logout(request):
+    logout(request)
+    return redirect('Home:index')
+
+
+def Signup(request):
+    #Se envian los datos al POST del signup
+    if request.method == 'POST':
+        #Se asignan las variables capturadas del form
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        #Verificacion si el nombre de usuario ya existe
+        user = User.objects.get(username=username)
+        if user is None:
+            #Se crea el usuario
+            user = User.objects.create_user(
+                first_name = first_name,
+                last_name = last_name,
+                username = username,
+                password = password,
+                email = email
+            )
+            user.save()
+            return HttpResponse('Usuario registrado')
+        else:
+            #Se manda un mensaje de error
+            return HttpResponse('El usuario ya existe')
+
+    else:
+
+        return render(request,'Home/signup.html')
