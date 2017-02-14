@@ -16,6 +16,7 @@
             {% if user.is_authenticated %}
                 <li><b>Hola {{user.username}}</b></li>
                 <li><a href="#">Mi perfil</a></li>
+                <li><a href="{% url 'Publicaciones:index'%}">Publicaciones</a></li>
                 <li><a href="{% url 'Home:logout'%}">Cerrar Sesión</a></li>
             {% else %}
                 <li><a href="{% url 'Home:signup'%}">Sign up</a></li>
@@ -28,5 +29,6 @@
     {% endblock%}
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

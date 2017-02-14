@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+{%block 'title'%}Publicaciones | add{%endblock%}
+{%block 'main'%}
+    <form action="{% url 'Publicaciones:add' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" name="nombre">
+                <label for="nombre">Nombre</label>
+            </div>
+            <div class="input-field col s12">
+                <textarea name="contenido"></textarea>
+                <label for="contenido">Descripcion</label>
+            </div>
+            <div class="input-field col s12">
+                <select name="tags">
+                    <option value="" disabled selected>Escoge una etiqueta</option>
+                    {% for key,value in tags.items%}
+                        <option value="{{key}}">{{value}}</option>
+                    {% endfor %}
+                </select>
+                <label>Seleccionar etiqueta</label>
+            </div>
+            <input type="file" name="imagen" accept="image/*">
+            <input type="submit" class="btn">
+        </div>
+    </form>
+{%endblock %}

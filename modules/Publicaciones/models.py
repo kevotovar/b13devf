@@ -28,6 +28,8 @@ class Publicacion (models.Model):
     autor = models.ForeignKey(User,on_delete=models.CASCADE)
     # Enum
     tags = models.CharField(choices=TAGS,max_length=50)
+    #Imagen relacionada
+    imagen = models.ImageField(upload_to='Publicaciones/',blank=True, null=True)
     # Llamado al Manager
     #lolo_publish = LoloPublicacionesManager()
 
