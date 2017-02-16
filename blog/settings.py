@@ -48,7 +48,7 @@ APPLICATION_APPS = [
 
 # Apps creadas por alguien ajeno al equipo
 THIRD_APPLICATION = [
-
+    'rest_framework',
 ]
 
 # Application definition
@@ -129,6 +129,12 @@ STATICFILES_DIRS = [os.path.join(os.getcwd(),'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.getcwd(),'media')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
+}
 
 try:
     from .local_settings import *
