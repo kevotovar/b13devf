@@ -15,7 +15,7 @@ class LoloPublicacionesManager(models.Manager):
         return super(LoloPublicacionesManager,self).get_queryset().filter(autor__username='lolo')
 '''
 #Clase de modelo principal
-class Publicacion (models.Model):
+class Publicacion(models.Model):
     # Generador de id primaria(
     id = models.AutoField(primary_key = True)
     # Varchar con un recomendado de 50 caracteres
@@ -25,11 +25,11 @@ class Publicacion (models.Model):
     # Timestamps
     fecha = models.DateField(auto_now_add=True)
     # Relación 1 a muchos inversa
-    autor = models.ForeignKey(User,on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='publicaciones')
     # Enum
-    tags = models.CharField(choices=TAGS,max_length=50)
+    tags = models.CharField(choices=TAGS, max_length=50)
     #Imagen relacionada
-    imagen = models.ImageField(upload_to='Publicaciones/',blank=True, null=True)
+    imagen = models.ImageField(upload_to='Publicaciones/', blank=True, null=True)
     # Llamado al Manager
     #lolo_publish = LoloPublicacionesManager()
 
