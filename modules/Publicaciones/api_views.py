@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from modules.Publicaciones.models import Publicacion
 from .serializers import UserSerializer,UserSecondSerializer,PublicacionSecondSerializer
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAdminUser, AllowAny
+from .permisssions import GroupPermission
 
 #Vistas basadas en clases
 
@@ -58,9 +60,12 @@ class PublicacionList(generics.ListCreateAPIView):
     
     queryset = Publicacion.objects.all()
     serializer_class = PublicacionSecondSerializer
+    permission_classes = (AllowAny,)
 
 
 class PublicacionDetail(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Publicacion.objects.all()
     serializer_class = PublicacionSecondSerializer
+    #Agrega la restriccion que debe ser administrador
+    permission_classes = (GroupPermission,)
