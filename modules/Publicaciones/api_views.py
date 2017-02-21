@@ -1,12 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import generics, filters
 from django.contrib.auth.models import User
 from modules.Publicaciones.models import Publicacion
 from .serializers import UserSerializer,UserSecondSerializer,PublicacionSecondSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAdminUser, AllowAny
+from django_filters.rest_framework import DjangoFilterBackend
 from .permisssions import GroupPermission
 
 #Vistas basadas en clases
@@ -61,6 +62,19 @@ class PublicacionList(generics.ListCreateAPIView):
     queryset = Publicacion.objects.all()
     serializer_class = PublicacionSecondSerializer
     permission_classes = (AllowAny,)
+    filter_backends = (filters.SearchFilter, DjangoFilterBackend,)
+    filter_fields = ('fecha',)
+    search_fields = ('nombre', 'tags')
+
+
+    """def get_queryset(self):
+
+        queryset = Publicacion.objects.all()
+        name = self.request.query_params.get('publicacion',None)
+        if name is not None:
+            queryset = Publicacion.objects.filter(nombre__icontains = name)
+        
+        return queryset"""
 
 
 class PublicacionDetail(generics.RetrieveUpdateDestroyAPIView):
